@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const db = require("../db");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const vt = require("../token");
 
 router.get("/", (req, res) => {
   db.query("SELECT * from users", (err, data) => {
@@ -13,7 +15,6 @@ router.post("/register", (req, res) => {
   const { name, phone_num, email, address, password } = req.body;
 
   db.query(`SELECT * from users where email = ?`, email, (err, data) => {
-    console.log(data[0].password);
     if (data.length != 0) {
       res.json({ msg: "email already registered" });
     } else {
@@ -36,11 +37,13 @@ router.post("/login", (req, res) => {
   const { email, password } = req.body;
 
   db.query(`SELECT * from users where email = ?`, email, (err, data) => {
+    //console.log(data);
     if (data.length != 0) {
       bcrypt.compare(password, data[0].password, function(err, results) {
-        console.log(results);
         if (results) {
-          res.status(200).json({ msg: "Logged in" });
+          jwt.sign({ data }, process.env.jwt_secret, (err, token) => {
+            res.status(200).json({ token });
+          });
         } else {
           res.json({ msg: "Incorrect password" });
         }
@@ -51,4 +54,20 @@ router.post("/login", (req, res) => {
   });
 });
 
+router.get("/orders", vt, (req, res) => {
+  jwt.verify(req.token, process.env.jwt_secret, (err, authData) => {
+    if (err) {
+      console.log(err);
+      res.sendStatus(403);
+    } else {
+      db.query(
+        "SELECT * from orders where uid = ?",
+        authData.data[0].uid,
+        (err, data) => {
+          err ? res.send(err) : res.json({ orders: data, authData });
+        }
+      );
+    }
+  });
+});
 module.exports = router;

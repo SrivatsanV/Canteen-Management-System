@@ -15,4 +15,14 @@ router.get("/:id", (req, res) => {
   });
 });
 
+router.post("/", (req, res) => {
+  const { item_name, item_type, description } = req.body;
+  db.query(
+    `INSERT IGNORE INTO items (item_name,item_type,description) values("${item_name}","${item_type}","${description}")`,
+    (err, results) => {
+      err ? res.send(err) : res.json({ msg: "added" });
+    }
+  );
+});
+
 module.exports = router;

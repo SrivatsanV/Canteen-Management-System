@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const db = require("../db");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 router.get("/", (req, res) => {
   db.query("SELECT * from night_canteen", (err, data) => {
@@ -56,7 +57,9 @@ router.post("/login", (req, res) => {
         bcrypt.compare(password, data[0].password, function(err, results) {
           console.log(results);
           if (results) {
-            res.status(200).json({ msg: "Logged in" });
+            jwt.sign({ data }, process.env.jwt_secret, (err, token) => {
+              res.status(200).json({ token });
+            });
           } else {
             res.json({ msg: "Incorrect password" });
           }
