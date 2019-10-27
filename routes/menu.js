@@ -4,13 +4,50 @@ const db = require("../db");
 const vt = require("../token");
 const jwt = require("jsonwebtoken");
 
-router.get("/:cid", (req, res) => {
-  db.query(
-    `SELECT * from menu LEFT JOIN items on menu.item_id = items.item_id where canteen_id = ${req.params.cid}`,
-    (err, results) => {
-      err ? res.send(err) : res.status(200).json({ menu: results });
+const groupBy = key => array =>
+  array.reduce((objectsByKeyValue, obj) => {
+    const value = obj[key];
+    objectsByKeyValue[value] = (objectsByKeyValue[value] || []).concat(obj);
+    return objectsByKeyValue;
+  }, {});
+const grouped_can = groupBy("canteen_id");
+
+router.get("/:cid", vt, (req, res) => {
+  jwt.verify(req.token, process.env.jwt_secret, (err, authData) => {
+    if (authData == undefined) res.sendStatus(403);
+    console.log(authData);
+    if (err) {
+      console.log(err);
+      res.sendStatus(403);
+    } else {
+      db.query(
+        `SELECT * from menu LEFT JOIN items on menu.item_id = items.item_id where canteen_id = ${req.params.cid}`,
+        (err, results) => {
+          err ? res.send(err) : res.status(200).json({ menu: results });
+        }
+      );
     }
-  );
+  });
+});
+
+router.get("/", vt, (req, res) => {
+  jwt.verify(req.token, process.env.jwt_secret, (err, authData) => {
+    if (authData == undefined) res.sendStatus(403);
+    console.log(authData);
+    if (err) {
+      console.log(err);
+      res.sendStatus(403);
+    } else {
+      db.query(
+        `SELECT * from menu LEFT JOIN items on menu.item_id = items.item_id`,
+        (err, results) => {
+          err
+            ? res.send(err)
+            : res.status(200).json({ menu: grouped_can(results) });
+        }
+      );
+    }
+  });
 });
 
 router.post("/", vt, (req, res) => {

@@ -35,10 +35,12 @@ router.post("/register", (req, res) => {
 
 router.post("/login", (req, res) => {
   const { email, password } = req.body;
+  console.log(req.body);
 
   db.query(`SELECT * from users where email = ?`, email, (err, data) => {
+    if (err) res.send(err);
     //console.log(data);
-    if (data.length != 0) {
+    else if (data.length != 0) {
       bcrypt.compare(password, data[0].password, function(err, results) {
         if (results) {
           jwt.sign({ data }, process.env.jwt_secret, (err, token) => {
