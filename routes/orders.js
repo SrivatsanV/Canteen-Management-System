@@ -5,6 +5,14 @@ const jwt = require("jsonwebtoken");
 const db = require("../db");
 const vt = require("../token");
 
+const groupBy = key => array =>
+  array.reduce((objectsByKeyValue, obj) => {
+    const value = obj[key];
+    objectsByKeyValue[value] = (objectsByKeyValue[value] || []).concat(obj);
+    return objectsByKeyValue;
+  }, {});
+const grouped_can = groupBy("order_id");
+
 router.get("/:id", (req, res) => {
   const id = req.params.id;
   db.query(`SELECT * from ordered_items where order_id=${id}`, (err, data) => {
@@ -22,7 +30,43 @@ router.get("/canteen/orders", vt, (req, res) => {
           `SELECT * from orders inner join ordered_items on orders.order_id=ordered_items.order_id where canteen_id = ?  `,
           authData.data[0].canteen_id,
           (err, results, data) => {
-            err ? res.send(err) : res.json({ results });
+            err ? res.send(err) : res.json({ orders: grouped_can(results) });
+          }
+        );
+      }
+    }
+  });
+});
+
+router.post("/canteen/orders/:id", vt, (req, res) => {
+  jwt.verify(req.token, process.env.jwt_secret, (err, authData) => {
+    if (authData == undefined) res.sendStatus(403);
+    else if (authData.data[0].uid) res.sendStatus(403);
+    else {
+      if (authData.data[0].canteen_id) {
+        db.query(
+          `ALTER orders set order_status = "Order Received" where order_id = ? `,
+          req.params.id,
+          (err, results, data) => {
+            err ? res.send(err) : res.json({ orders: grouped_can(results) });
+          }
+        );
+      }
+    }
+  });
+});
+
+router.get("/user/orders", vt, (req, res) => {
+  jwt.verify(req.token, process.env.jwt_secret, (err, authData) => {
+    if (authData == undefined) res.sendStatus(403);
+    else if (authData.data[0].canteen_id) res.sendStatus(403);
+    else {
+      if (authData.data[0].uid) {
+        db.query(
+          `SELECT * from orders inner join ordered_items on orders.order_id=ordered_items.order_id inner join items on items.item_id = ordered_items.item_id where uid = ? `,
+          authData.data[0].uid,
+          (err, results, data) => {
+            err ? res.send(err) : res.json({ orders: grouped_can(results) });
           }
         );
       }
@@ -31,7 +75,7 @@ router.get("/canteen/orders", vt, (req, res) => {
 });
 
 router.post("/", vt, (req, res) => {
-  jwt.verify(req.token, jwt_secret, (err, authData) => {
+  jwt.verify(req.token, process.env.jwt_secret, (err, authData) => {
     const uid = authData.data[0].uid;
     const can_id = req.body.canteen_id;
     const status = req.body.order_status;

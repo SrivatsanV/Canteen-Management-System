@@ -4,6 +4,9 @@ import { Link } from "react-router-dom";
 
 export default function ItemCard(props) {
   const item = props.m;
+  const handleChange = e => {
+    props.handleOrders(e);
+  };
   return (
     <div
       style={{ margin: "10px auto 10px auto", width: "50%", textAlign: "left" }}
@@ -14,6 +17,7 @@ export default function ItemCard(props) {
         <p>{item.description}</p>
         <p>Price : {item.price}</p>
         <p>Type : {item.item_type}</p>
+        <Button onClick={handleChange(item.item_id)}>add</Button>
       </Card>
     </div>
   );

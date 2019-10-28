@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { Button, InputGroup } from "@blueprintjs/core";
 import axios from "axios";
-import { Link, Switch, Route } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 import "../styles/login.css";
 import validate from "./loginValidation";
 import useForm from "./useForm";
-import ItemsList from "./ItemsList";
 
 export default function Login() {
   const { values, errors, handleChange, handleSubmit } = useForm(
@@ -23,29 +22,30 @@ export default function Login() {
       setShow(true);
     });
   }
-
-  return (
-    <div className="login" onSubmit={handleSubmit}>
-      <form style={{ textAlign: "left" }}>
-        <label className="label">Email Address</label>
-        <InputGroup
-          className="inputField"
-          leftIcon="envelope"
-          placeholder="Enter your email"
-          name="email"
-          onChange={handleChange}
-        />
-        {errors.email && <p className="help is-danger">{errors.email}</p>}
-        <label className="label">Password</label>
-        <InputGroup
-          className="inputField"
-          leftIcon="lock"
-          placeholder="Enter your password"
-          name="password"
-          onChange={handleChange}
-        />
-        {errors.password && <p className="help is-danger">{errors.password}</p>}
-        <Link to="/itemlist">
+  if (!show) {
+    return (
+      <div className="login">
+        <form style={{ textAlign: "left" }} onSubmit={handleSubmit}>
+          <label className="label">Email Address</label>
+          <InputGroup
+            className="inputField"
+            leftIcon="envelope"
+            placeholder="Enter your email"
+            name="email"
+            onChange={handleChange}
+          />
+          {errors.email && <p className="help is-danger">{errors.email}</p>}
+          <label className="label">Password</label>
+          <InputGroup
+            className="inputField"
+            leftIcon="lock"
+            placeholder="Enter your password"
+            name="password"
+            onChange={handleChange}
+          />
+          {errors.password && (
+            <p className="help is-danger">{errors.password}</p>
+          )}
           <Button
             className="submitBtn bp3-intent-success"
             type="submit"
@@ -53,8 +53,18 @@ export default function Login() {
           >
             Login
           </Button>
+        </form>
+        <Link to="/register/user">
+          <Button
+            className="submitBtn bp3-intent-success"
+            style={{ marginTop: "10px" }}
+          >
+            Register
+          </Button>
         </Link>
-      </form>
-    </div>
-  );
+      </div>
+    );
+  } else {
+    return <Redirect to="/canteenlist" />;
+  }
 }

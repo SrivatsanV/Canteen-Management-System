@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Button, InputGroup } from "@blueprintjs/core";
 import axios from "axios";
 import CanteenCard from "./CanteenCard";
+import NavBarUser from "./NavBarUser";
 
-export default function ItemsList() {
+export default function CanteenList() {
   const [canteen, setCanteen] = useState([]);
   const [menu, setMenu] = useState([]);
   useEffect(() => {
@@ -32,9 +33,12 @@ export default function ItemsList() {
       {/* {Object.keys(menu).map((key, index) =>
         menu[key].map(m => <p>{m.item_id}</p>)
       )} */}
-      {canteen.map(c => (
-        <CanteenCard c={c} />
-      ))}
+      <NavBarUser />
+      <div style={{ marginTop: "10vh" }}>
+        {canteen.map(c => (
+          <CanteenCard c={c} />
+        ))}
+      </div>
     </div>
   );
 }
