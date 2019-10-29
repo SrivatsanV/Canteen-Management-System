@@ -15,7 +15,9 @@ router.post("/register", (req, res) => {
   const { name, phone_num, email, address, password } = req.body;
 
   db.query(`SELECT * from users where email = ?`, email, (err, data) => {
+    console.log(data.length);
     if (data.length != 0) {
+      console.log("HI");
       res.json({ msg: "email already registered" });
     } else {
       //Hashing password

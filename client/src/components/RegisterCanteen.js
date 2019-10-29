@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { Button, InputGroup } from "@blueprintjs/core";
+import { Button, InputGroup, RadioGroup, Radio } from "@blueprintjs/core";
 import axios from "axios";
 import { Redirect } from "react-router-dom";
 
 import "../styles/login.css";
-import validate from "./registerValidation";
+import validate from "./canregValidation";
 import useForm from "./useForm";
 
 export default function RegisterUser() {
@@ -16,9 +16,10 @@ export default function RegisterUser() {
   const [show, setShow] = useState(false);
   function register() {
     console.log(values);
-    axios.post(`http://localhost:5000/user/register`, values).then(res => {
+    axios.post(`http://localhost:5000/canteen/register`, values).then(res => {
       console.log(res);
       console.log(res.data);
+
       if (res.data.msg == "email already registered") {
         setemailErr({ msg: "Email already registered" });
       } else {
@@ -28,8 +29,8 @@ export default function RegisterUser() {
   }
   if (!show) {
     return (
-      <div className="login" onSubmit={handleSubmit}>
-        <form style={{ textAlign: "left" }}>
+      <div className="login">
+        <form style={{ textAlign: "left" }} onSubmit={handleSubmit}>
           <label className="label">Email Address</label>
           <InputGroup
             className="inputField"
@@ -38,22 +39,24 @@ export default function RegisterUser() {
             name="email"
             onChange={handleChange}
           />
-          {emailErr.msg && <p className="danger">{emailErr.msg}</p>}
+          {<p className="danger">{emailErr.msg}</p>}
           {errors.email && <p className="danger">{errors.email}</p>}
           <label className="label">Name</label>
           <InputGroup
             className="inputField"
             leftIcon="envelope"
-            placeholder="Enter Your Name"
-            name="name"
+            placeholder="Enter Canteen Name"
+            name="canteen_name"
             onChange={handleChange}
           />
-          {errors.name && <p className="danger">{errors.name}</p>}
+          {errors.canteen_name && (
+            <p className="danger">{errors.canteen_name}</p>
+          )}
           <label className="label">Phone Number</label>
           <InputGroup
             className="inputField"
             leftIcon="envelope"
-            placeholder="Enter Canteen Name"
+            placeholder="Enter phone number"
             name="phone_num"
             onChange={handleChange}
           />
@@ -62,11 +65,16 @@ export default function RegisterUser() {
           <InputGroup
             className="inputField"
             leftIcon="envelope"
-            placeholder="Enter Address"
-            name="address"
+            placeholder="Enter location"
+            name="location"
             onChange={handleChange}
           />
-          {errors.address && <p className="danger">{errors.address}</p>}
+          {errors.location && <p className="danger">{errors.location}</p>}
+          <RadioGroup label="Meal Choice" onChange={handleChange} name="type">
+            <Radio label="Veg" value="VEG" />
+            <Radio label="Veg and Non Veg" value="VEG-NONVEG" />
+          </RadioGroup>
+          {errors.type && <p className="danger">{errors.type}</p>}
           <label className="label">Password</label>
           <InputGroup
             className="inputField"
@@ -90,6 +98,6 @@ export default function RegisterUser() {
       </div>
     );
   } else {
-    return <Redirect to="/user" />;
+    return <Redirect to="/canteen" />;
   }
 }

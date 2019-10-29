@@ -15,7 +15,7 @@ export default function Login() {
   const [show, setShow] = useState(false);
   function login() {
     console.log(values);
-    axios.post(`http://localhost:5000/user/login`, values).then(res => {
+    axios.post(`http://localhost:5000/canteen/login`, values).then(res => {
       console.log(res);
       console.log(res.data);
       localStorage.setItem("token", res.data.token);
@@ -54,7 +54,7 @@ export default function Login() {
             Login
           </Button>
         </form>
-        <Link to="/register/user">
+        <Link to="/register/canteen">
           <Button
             className="submitBtn bp3-intent-success"
             style={{ marginTop: "10px" }}
@@ -62,17 +62,9 @@ export default function Login() {
             Register
           </Button>
         </Link>
-        <Link to="/canteen">
-          <Button
-            className="submitBtn bp3-intent-primary"
-            style={{ marginTop: "10px" }}
-          >
-            Night Canteen
-          </Button>
-        </Link>
       </div>
     );
   } else {
-    return <Redirect to="/canteenlist" />;
+    return <Redirect to="/canteen/orders" />;
   }
 }
