@@ -4,3 +4,6 @@
 .App {
   text-align: center;
 }
+.danger {
+  color: red;
+}

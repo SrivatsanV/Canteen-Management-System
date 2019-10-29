@@ -9,6 +9,10 @@ import LoginCanteen from "./components/LoginCanteen";
 import CanteenReg from "./components/RegisterCanteen";
 import CanteenDash from "./components/CanDashBoard";
 import CanMenu from "./components/CanMenu";
+
+import AdminForm from "./components/AdminForm";
+import AdminDash from "./components/AdminDash";
+
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 function App() {
@@ -25,6 +29,8 @@ function App() {
           <Route path="/register/canteen" exact component={CanteenReg} />
           <Route path="/canteen/orders" exact component={CanteenDash} />
           <Route path="/canteen/menu" exact component={CanMenu} />
+          <Route path="/user/admin" exact component={AdminForm} />
+          <Route path="/admindash" exact component={AdminDash} />
         </Switch>
       </div>
     </BrowserRouter>

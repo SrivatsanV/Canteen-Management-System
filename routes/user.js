@@ -57,6 +57,21 @@ router.post("/login", (req, res) => {
     }
   });
 });
+router.post("/admin/login", (req, res) => {
+  const { email, password } = req.body;
+  console.log(req.body);
+
+  db.query(`SELECT * from admin where email = ?`, email, (err, data) => {
+    if (err) res.send(err);
+    //console.log(data);
+    else if (data.length != 0) {
+      if (data[0].password == password) res.json({ msg: "Logged in" });
+      else res.json({ msg: "Incorrect password" });
+    } else {
+      res.json({ msg: "email doesnt exist" });
+    }
+  });
+});
 
 router.get("/orders", vt, (req, res) => {
   jwt.verify(req.token, process.env.jwt_secret, (err, authData) => {

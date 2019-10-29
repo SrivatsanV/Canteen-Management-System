@@ -54,27 +54,32 @@ export default function PlaceOrder(props) {
     return (
       <div>
         {ordered.map(m => (
-          <div
-            style={{
-              textAlign: "left"
-            }}
-            key={m.item_id}
-          >
-            <Card>
-              <h3>
+          <div key={m.item_id}>
+            <Card
+              style={{
+                height: "150px",
+                width: "80%",
+                display: "grid",
+                gridTemplateColumns: "2fr 1fr",
+                alignItems: "center"
+              }}
+            >
+              <h3 style={{ gridColumn: "1/2" }}>
                 {m.item_name} | Price : {m.price}
               </h3>
               <Button
                 icon="trash"
                 className="bp3-intent-danger"
                 onClick={() => handleClick(m)}
+                style={{ gridColumn: "2/3" }}
+                style={{ width: "50%", textAlign: "right" }}
               />
             </Card>
           </div>
         ))}
-        <Card>
+        <Card style={{ height: "150px", width: "80%" }}>
           <h3>Total Price : {total}</h3>
-          <Button onClick={toggleOverlay}></Button>
+          <Button onClick={toggleOverlay}>Place Order</Button>
         </Card>
         <Alert
           isOpen={isOpen}
@@ -90,7 +95,7 @@ export default function PlaceOrder(props) {
     );
   } else {
     return (
-      <Card>
+      <Card style={{ height: "100px", width: "80%" }}>
         <h3>Total Price : {total}</h3>
       </Card>
     );

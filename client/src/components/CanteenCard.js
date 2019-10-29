@@ -10,10 +10,16 @@ export default function CanteenCard(props) {
       key={canteen.canteen_id}
     >
       <Card interactive={true} elevation={Elevation.THREE}>
-        <h3>{canteen.canteen_name}</h3>
-        <p>Phone number : {canteen.phone_num}</p>
-        <p>Location : {canteen.location}</p>
-        <p>Type : {canteen.type}</p>
+        <h3 style={{ color: "#2377aa" }}>{canteen.canteen_name}</h3>
+        <p>
+          <b>Phone number :</b> {canteen.phone_num}
+        </p>
+        <p>
+          <b>Location :</b> {canteen.location}
+        </p>
+        <p>
+          <b>Type :</b> {canteen.type}
+        </p>
         <Link to={`/menu/${canteen.canteen_id}`}>
           <Button>View Items</Button>
         </Link>

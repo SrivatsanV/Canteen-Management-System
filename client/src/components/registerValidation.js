@@ -20,5 +20,10 @@ export default function validate(values) {
   } else if (values.address.length >= 45) {
     errors.address = "Enter smaller address";
   }
+  if (!values.name) {
+    errors.name = "Enter name";
+  } else if (values.address.length >= 45) {
+    errors.address = "Enter smaller name";
+  }
   return errors;
 }

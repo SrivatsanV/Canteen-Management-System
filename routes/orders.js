@@ -27,7 +27,7 @@ router.get("/canteen/orders", vt, (req, res) => {
     else {
       if (authData.data[0].canteen_id) {
         db.query(
-          `SELECT * from orders inner join ordered_items on orders.order_id=ordered_items.order_id inner join items on items.item_id = ordered_items.item_id where canteen_id = ?  `,
+          `SELECT * from orders inner join ordered_items on orders.order_id=ordered_items.order_id inner join items on items.item_id = ordered_items.item_id inner join users on orders.uid = users.uid where canteen_id = ?  `,
           authData.data[0].canteen_id,
           (err, results, data) => {
             err ? res.send(err) : res.json({ orders: grouped_can(results) });
@@ -45,8 +45,8 @@ router.get("/canteen/orders/accept/:id", vt, (req, res) => {
     else {
       if (authData.data[0].canteen_id) {
         db.query(
-          `UPDATE orders set order_status = "Order Accepted", message = ? where order_id = ? `,
-          [req.body.message, req.params.id],
+          `UPDATE orders set order_status = "Order Accepted" where order_id = ? `,
+          [req.params.id],
           (err, results, data) => {
             err ? res.send(err) : res.json({ orders: results });
           }
@@ -56,15 +56,15 @@ router.get("/canteen/orders/accept/:id", vt, (req, res) => {
   });
 });
 
-router.post("/canteen/orders/reject/:id", vt, (req, res) => {
+router.get("/canteen/orders/reject/:id", vt, (req, res) => {
   jwt.verify(req.token, process.env.jwt_secret, (err, authData) => {
     if (authData == undefined) res.sendStatus(403);
     else if (authData.data[0].uid) res.sendStatus(403);
     else {
       if (authData.data[0].canteen_id) {
         db.query(
-          `UPDATE  orders set order_status = "Order Rejected" , message = ? where order_id = ? `,
-          [req.body.message, parseInt(req.params.id)],
+          `UPDATE  orders set order_status = "Order Rejected" where order_id = ? `,
+          parseInt(req.params.id),
           (err, results, data) => {
             err ? res.send(err) : res.json({ orders: results });
           }
@@ -81,7 +81,7 @@ router.get("/user/orders", vt, (req, res) => {
     else {
       if (authData.data[0].uid) {
         db.query(
-          `SELECT * from orders inner join ordered_items on orders.order_id=ordered_items.order_id inner join items on items.item_id = ordered_items.item_id where uid = ? `,
+          `SELECT * from orders inner join ordered_items on orders.order_id=ordered_items.order_id inner join items on items.item_id = ordered_items.item_id inner join night_canteen on night_canteen.canteen_id = orders.canteen_id where uid = ? `,
           authData.data[0].uid,
           (err, results, data) => {
             err ? res.send(err) : res.json({ orders: grouped_can(results) });

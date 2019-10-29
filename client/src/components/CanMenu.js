@@ -1,9 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Button, InputGroup, Card, HTMLSelect } from "@blueprintjs/core";
+import {
+  Button,
+  InputGroup,
+  Card,
+  HTMLSelect,
+  Elevation
+} from "@blueprintjs/core";
 import axios from "axios";
 import NavBarCan from "./NavBarCan";
 import useForm from "./useForm";
 import validate from "./menuValidate";
+
+import "../styles/canMenu.css";
 
 export default function CanDashBoard() {
   const { values, errors, handleChange, handleSubmit } = useForm(sub, validate);
@@ -65,56 +73,67 @@ export default function CanDashBoard() {
   return (
     <div>
       <NavBarCan />
-      <div style={{ marginTop: "10vh" }}>
-        {menu.map(m => (
-          <div
-            style={{
-              margin: "10px auto 10px auto",
-              width: "50%",
-              textAlign: "left"
-            }}
-            key={m.item_id}
-          >
-            <Card>
-              <h3>{m.item_name}</h3>
-              <p>{m.description}</p>
-              <p>Price : {m.price}</p>
-              <p>Type : {m.item_type}</p>
-              <Button
-                icon="trash"
-                onClick={() => handleDelete(m)}
-                className="bp3-intent-danger"
-              >
-                Delete
-              </Button>
-            </Card>
-          </div>
-        ))}
-      </div>
-      <form onSubmit={sub}>
-        <label className="label">Select Item</label>
-        <HTMLSelect name="item_select" onChange={e => seti(e.target.value)}>
-          {items.map(i => (
-            <option value={i.item_id}>{i.item_name}</option>
+      <div className="containerMenu">
+        <div style={{ marginTop: "10vh" }} className="menu">
+          {menu.map(m => (
+            <div
+              style={{
+                margin: "10px auto 10px auto",
+                width: "50%",
+                textAlign: "left"
+              }}
+              key={m.item_id}
+            >
+              <Card elevation={Elevation.TWO}>
+                <h3 style={{ color: "#2377aa" }}>{m.item_name}</h3>
+                <p>
+                  <b>Description :</b> {m.description}
+                </p>
+                <p>
+                  <b>Price :</b> {m.price}
+                </p>
+                <p>
+                  <b>Type :</b> {m.item_type}
+                </p>
+                <Button
+                  icon="trash"
+                  onClick={() => handleDelete(m)}
+                  className="bp3-intent-danger"
+                >
+                  Delete
+                </Button>
+              </Card>
+            </div>
           ))}
-        </HTMLSelect>
-        <label className="label">Price</label>
-        <InputGroup
-          className="inputField"
-          leftIcon="envelope"
-          placeholder="Enter price"
-          name="price"
-          onChange={e => setPrice(e.target.value)}
-          type="number"
-        />
-        <Button
-          className="submitBtn bp3-intent-success"
-          type="submit"
-          value="Login"
-        >
-          Update
-        </Button>
-      </form>
+        </div>
+        <form onSubmit={sub} className="menuForm">
+          <label className="label">Select Item </label>
+          <HTMLSelect name="item_select" onChange={e => seti(e.target.value)}>
+            <option>Select Item</option>
+            {items.map(i => (
+              <option value={i.item_id}>
+                {i.item_name} {i.item_type}
+              </option>
+            ))}
+          </HTMLSelect>
+
+          <InputGroup
+            className="inputField"
+            leftIcon="dollar"
+            placeholder="Enter price"
+            name="price"
+            onChange={e => setPrice(e.target.value)}
+            type="number"
+          />
+          <Button
+            className="submitBtn bp3-intent-success"
+            type="submit"
+            value="Login"
+          >
+            Update
+          </Button>
+        </form>
+      </div>
     </div>
   );
 }

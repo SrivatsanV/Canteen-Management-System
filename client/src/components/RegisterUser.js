@@ -29,6 +29,10 @@ export default function RegisterUser() {
   if (!show) {
     return (
       <div className="login" onSubmit={handleSubmit}>
+        <h2>
+          <i class="fas fa-utensils"></i>
+          {"    "}NITK NC
+        </h2>
         <form style={{ textAlign: "left" }}>
           <label className="label">Email Address</label>
           <InputGroup
@@ -43,7 +47,7 @@ export default function RegisterUser() {
           <label className="label">Name</label>
           <InputGroup
             className="inputField"
-            leftIcon="envelope"
+            leftIcon="user"
             placeholder="Enter Your Name"
             name="name"
             onChange={handleChange}
@@ -52,8 +56,8 @@ export default function RegisterUser() {
           <label className="label">Phone Number</label>
           <InputGroup
             className="inputField"
-            leftIcon="envelope"
-            placeholder="Enter Canteen Name"
+            leftIcon="phone"
+            placeholder="Enter Phone Number"
             name="phone_num"
             onChange={handleChange}
           />
@@ -61,7 +65,7 @@ export default function RegisterUser() {
           <label className="label">Address</label>
           <InputGroup
             className="inputField"
-            leftIcon="envelope"
+            leftIcon="locate"
             placeholder="Enter Address"
             name="address"
             onChange={handleChange}
@@ -75,9 +79,7 @@ export default function RegisterUser() {
             name="password"
             onChange={handleChange}
           />
-          {errors.password && (
-            <p className="help is-danger">{errors.password}</p>
-          )}
+          {errors.password && <p className="danger">{errors.password}</p>}
 
           <Button
             className="submitBtn bp3-intent-success"

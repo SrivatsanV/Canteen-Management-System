@@ -48,29 +48,66 @@ export default function Menu({ match }) {
   return (
     <div>
       <NavBarUser />
-      <div style={{ marginTop: "10vh" }}>
-        {menu.map(m => (
-          <div
-            style={{
-              margin: "10px auto 10px auto",
-              width: "50%",
-              textAlign: "left"
-            }}
-            key={m.item_id}
-          >
-            <Card>
-              <h3>{m.item_name}</h3>
-              <p>{m.description}</p>
-              <p>Price : {m.price}</p>
-              <p>Type : {m.item_type}</p>
-              <Button onClick={() => handleOrders(m)}>add</Button>
-            </Card>
-          </div>
-        ))}
+      <div
+        style={{
+          marginTop: "10vh",
+          display: "grid",
+          gridTemplateColumns: "2fr 1fr",
+          gridGap: "50px"
+        }}
+      >
+        <div style={{ gridColumn: "1/2", overflowY: "scroll", height: "90vh" }}>
+          {menu.map(m => (
+            <div
+              style={{
+                margin: "10px auto 10px auto",
+                width: "50%",
+                textAlign: "left"
+              }}
+              key={m.item_id}
+            >
+              <Card
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "2fr 1fr",
+                  alignItems: "center"
+                }}
+              >
+                <div style={{ gridColumn: "1/2" }}>
+                  <h3 style={{ color: "#2377aa" }}>{m.item_name}</h3>
+                  <p>
+                    <b>Description : </b>
+                    {m.description}
+                  </p>
+                  <p>
+                    <b>Price :</b> {m.price}
+                  </p>
+                  <p>
+                    <b>Type :</b> {m.item_type}
+                  </p>
+                </div>
+                <div style={{ gridColumn: "2/3" }}>
+                  <Button
+                    onClick={() => handleOrders(m)}
+                    className="bp3-intent-success"
+                  >
+                    Add
+                  </Button>
+                </div>
+              </Card>
+            </div>
+          ))}
+        </div>
         <PlaceOrder
           items={items}
           handleDelete={handleDelete}
           handleClear={handleClear}
+          style={{
+            gridColumn: "2/3",
+            textAlign: "center",
+            overflowY: "scroll",
+            height: "90vh"
+          }}
         />
       </div>
     </div>

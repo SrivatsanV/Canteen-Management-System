@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import NavBarUser from "./NavBarUser";
 import axios from "axios";
-import { Button, InputGroup, Card, Navbar } from "@blueprintjs/core";
+import { Button, InputGroup, Card, Elevation } from "@blueprintjs/core";
 
 export default function OrdersUser() {
   const [orders, setOrders] = useState([]);
@@ -23,15 +23,37 @@ export default function OrdersUser() {
       <NavBarUser />
       <div style={{ marginTop: "10vh" }}>
         {Object.keys(orders).map((key, index) => (
-          <Card style={{ width: "50%", margin: "auto" }}>
+          <Card
+            style={{ width: "50%", margin: " 20px auto auto auto" }}
+            elevation={Elevation.TWO}
+          >
             <h3>Order ID : {key}</h3>
-            <h4>Order Status : {orders[key][0].order_status}</h4>
+            {orders[key][0].order_status == "Order Accepted" &&
+            orders[key][0].order_status != "Order Rejected" ? (
+              <h4 style={{ color: "#119a61" }}>
+                Order Status : {orders[key][0].order_status}
+              </h4>
+            ) : null}
+            {orders[key][0].order_status == "Order Rejected" &&
+            orders[key][0].order_status != "Order Accepted" ? (
+              <h4 style={{ color: "#dc3c3c" }}>
+                Order Status : {orders[key][0].order_status}
+              </h4>
+            ) : null}
+            {orders[key][0].order_status != "Order Rejected" &&
+            orders[key][0].order_status != "Order Accepted" ? (
+              <h4>Order Status : {orders[key][0].order_status}</h4>
+            ) : null}
             {orders[key].map(o => (
               <p>
                 {o.item_name} : {o.price}
               </p>
             ))}
             <h4>Total Price : {orders[key][0].total_price}</h4>
+            <h5>
+              Canteen : {orders[key][0].canteen_name} Ph :
+              {orders[key][0].phone_num}
+            </h5>
           </Card>
         ))}
       </div>
