@@ -27,9 +27,10 @@ router.post("/register", (req, res) => {
     `SELECT * from night_canteen where email = ?`,
     email,
     (err, data) => {
-      if (data.length != 0) {
+      console.log(data);
+      if (data.length !== 0) {
         res.json({ msg: "email already registered" });
-      } else {
+      } else if (data.length == 0) {
         //Hashing password
 
         bcrypt.hash(password, 10, (err, hash) => {

@@ -15,7 +15,9 @@ router.post("/register", (req, res) => {
   const { name, phone_num, email, address, password } = req.body;
 
   db.query(`SELECT * from users where email = ?`, email, (err, data) => {
+    console.log(data.length);
     if (data.length != 0) {
+      console.log("HI");
       res.json({ msg: "email already registered" });
     } else {
       //Hashing password
@@ -35,10 +37,12 @@ router.post("/register", (req, res) => {
 
 router.post("/login", (req, res) => {
   const { email, password } = req.body;
+  console.log(req.body);
 
   db.query(`SELECT * from users where email = ?`, email, (err, data) => {
+    if (err) res.send(err);
     //console.log(data);
-    if (data.length != 0) {
+    else if (data.length != 0) {
       bcrypt.compare(password, data[0].password, function(err, results) {
         if (results) {
           jwt.sign({ data }, process.env.jwt_secret, (err, token) => {
@@ -48,6 +52,21 @@ router.post("/login", (req, res) => {
           res.json({ msg: "Incorrect password" });
         }
       });
+    } else {
+      res.json({ msg: "email doesnt exist" });
+    }
+  });
+});
+router.post("/admin/login", (req, res) => {
+  const { email, password } = req.body;
+  console.log(req.body);
+
+  db.query(`SELECT * from admin where email = ?`, email, (err, data) => {
+    if (err) res.send(err);
+    //console.log(data);
+    else if (data.length != 0) {
+      if (data[0].password == password) res.json({ msg: "Logged in" });
+      else res.json({ msg: "Incorrect password" });
     } else {
       res.json({ msg: "email doesnt exist" });
     }

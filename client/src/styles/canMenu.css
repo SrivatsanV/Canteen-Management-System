@@ -1,0 +1,15 @@
+.containerMenu {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+}
+
+.menu {
+  grid-column: 1/2;
+  overflow-y: scroll;
+  height: 90vh;
+}
+
+.menuForm {
+  grid-column: 2/3;
+  margin: 10vh 20px 0 20px;
+}
