@@ -28,4 +28,4 @@ https://dev.mysql.com/downloads/workbench/
 
 ### Workflow
 1. Create a branch from ```develop```
-1. Push your changes to the ```develop``` branch alone.
+1. Push your changes to your branch and make a PR to ```develop``` branch alone.
