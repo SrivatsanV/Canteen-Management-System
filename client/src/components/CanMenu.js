@@ -80,25 +80,26 @@ export default function CanDashBoard() {
               style={{
                 margin: "10px auto 10px auto",
                 width: "50%",
-                textAlign: "left"
+                textAlign: "left",
+
               }}
               key={m.item_id}
             >
               <Card elevation={Elevation.TWO}>
                 <h3 style={{ color: "#2377aa" }}>{m.item_name}</h3>
                 <p>
-                  <b>Description :</b> {m.description}
+                  <b style={{fontFamily:"Georgia"}}>Description :</b> {m.description}
                 </p>
                 <p>
-                  <b>Price :</b> {m.price}
+                  <b style={{fontFamily:"Georgia"}}>Price :</b> {m.price}
                 </p>
                 <p>
-                  <b>Type :</b> {m.item_type}
+                  <b style={{fontFamily:"Georgia"}}>Type :</b> {m.item_type}
                 </p>
                 <Button
                   icon="trash"
                   onClick={() => handleDelete(m)}
-                  className="bp3-intent-danger"
+                  className="bp3-intent-primary"
                 >
                   Delete
                 </Button>
