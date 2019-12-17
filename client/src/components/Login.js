@@ -7,6 +7,7 @@ import "../styles/login.css";
 import validate from "./loginValidation";
 import useForm from "./useForm";
 
+
 export default function Login() {
   const { values, errors, handleChange, handleSubmit } = useForm(
     login,
@@ -30,7 +31,9 @@ export default function Login() {
   }
   if (!show) {
     return (
+
       <div className="login">
+        <img src="/food2.PNG"   style={{ margin: "0 0 auto auto"}} />
         <h2>
           <i class="fas fa-utensils"></i>
           {"    "}NITK NC
@@ -87,7 +90,11 @@ export default function Login() {
             Admin
           </Button>
         </Link>
+        <div class="im" style={{ margin: "auto auto 0 0"}}>
+        <img src="/food1.PNG" />
+        </div>
       </div>
+
     );
   } else {
     return <Redirect to="/canteenlist" />;
