@@ -44,7 +44,7 @@ export default function AdminDash() {
         onSubmit={sub}
         style={{ margin: "10vh auto auto auto", width: "50%" }}
       >
-        <label className="label">Item Name </label>
+        <label className="label" style={{fontFamily:"Roboto",fontSize:"200%"}}>Item Name </label>
         <InputGroup
           className="inputField"
           placeholder="Enter name"
