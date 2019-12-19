@@ -89,7 +89,8 @@ export default function Menu({ match }) {
                 <div style={{ gridColumn: "2/3" }}>
                   <Button
                     onClick={() => handleOrders(m)}
-                    className="bp3-intent-success"
+                    // className="bp3-intent-success"
+                    className="submitBtn bp3-intent-danger"
                   >
                     Add
                   </Button>
