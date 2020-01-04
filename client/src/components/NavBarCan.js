@@ -7,7 +7,7 @@ export default function NavBarUser() {
     <div>
       <Navbar fixedToTop={true} className="bp3-dark">
         <Navbar.Group align={Alignment.LEFT}>
-          <Navbar.Heading>NITK NC</Navbar.Heading>
+          <Navbar.Heading><em>NITK NC</em></Navbar.Heading>
           <Navbar.Divider />
           <Link
             to={`/canteen/orders`}

@@ -66,7 +66,10 @@ export default function CanDashBoard() {
               width: "50%",
               display: "grid",
               gridTemplateColumns: "2fr 1fr",
-              alignItems: "center"
+              alignItems: "center",
+              backgroundColor:"#f4b0c7",
+              fontFamily:"Lucida Sans Unicode",
+              color:"#015668"
             }}
             elevation={Elevation.TWO}
           >

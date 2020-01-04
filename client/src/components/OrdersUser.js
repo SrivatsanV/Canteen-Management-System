@@ -21,10 +21,10 @@ export default function OrdersUser() {
   return (
     <div>
       <NavBarUser />
-      <div style={{ marginTop: "10vh" }}>
+      <div style={{ marginTop: "10vh",fontFamily:"Georgia"}}>
         {Object.keys(orders).map((key, index) => (
           <Card
-            style={{ width: "50%", margin: " 20px auto auto auto" }}
+            style={{ width: "50%", margin: " 20px auto auto auto",backgroundColor:"#ffe8d6" }}
             elevation={Elevation.TWO}
           >
             <h3>Order ID : {key}</h3>
