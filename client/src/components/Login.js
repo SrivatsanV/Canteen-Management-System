@@ -32,7 +32,7 @@ export default function Login() {
   if (!show) {
     return (
 
-      <div className="login">
+      <div className="login" >
         <img src="/food2.PNG"   style={{ margin: "0 0 auto auto"}} />
         <h2>
           <i class="fas fa-utensils"></i>
