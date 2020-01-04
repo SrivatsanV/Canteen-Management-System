@@ -61,7 +61,8 @@ export default function PlaceOrder(props) {
                 width: "80%",
                 display: "grid",
                 gridTemplateColumns: "2fr 1fr",
-                alignItems: "center"
+                alignItems: "center",
+                backgroundColor:"#ffe8d6"
               }}
             >
               <h3 style={{ gridColumn: "1/2" }}>
