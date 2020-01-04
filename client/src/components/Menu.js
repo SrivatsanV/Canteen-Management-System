@@ -53,7 +53,7 @@ export default function Menu({ match }) {
           marginTop: "10vh",
           display: "grid",
           gridTemplateColumns: "2fr 1fr",
-          gridGap: "50px"
+          gridGap: "50px",backgroundColor:"#f1f1b0"
         }}
       >
         <div style={{ gridColumn: "1/2", overflowY: "scroll", height: "90vh" }}>
@@ -70,11 +70,12 @@ export default function Menu({ match }) {
                 style={{
                   display: "grid",
                   gridTemplateColumns: "2fr 1fr",
-                  alignItems: "center"
+                  alignItems: "center",
+                  backgroundColor:"#ff896b",fontFamily:"Georgia"
                 }}
               >
                 <div style={{ gridColumn: "1/2" }}>
-                  <h3 style={{ color: "#2377aa" }}>{m.item_name}</h3>
+                  <h3 style={{ color: "#230444" }}>{m.item_name}</h3>
                   <p>
                     <b>Description : </b>
                     {m.description}
