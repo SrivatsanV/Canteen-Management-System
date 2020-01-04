@@ -30,11 +30,12 @@ export default function Login() {
   if (!show) {
     return (
       <div className="login">
+      <img src="/food2.PNG"   style={{ margin: "0 0 auto auto"}} />
         <h2>
           <i class="fas fa-utensils"></i>
           {"    "}NITK NC
         </h2>
-        <form style={{ textAlign: "left" }} onSubmit={handleSubmit}>
+        <form style={{ textAlign: "left"  }} onSubmit={handleSubmit}>
           {err.msg && <p className="danger">{err.msg}</p>}
           <label className="label">Email Address</label>
           <InputGroup
@@ -70,6 +71,7 @@ export default function Login() {
             Register
           </Button>
         </Link>
+          <img src="/food1.PNG" />
       </div>
     );
   } else {
