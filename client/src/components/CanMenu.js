@@ -71,16 +71,16 @@ export default function CanDashBoard() {
   };
   //const handleEdit
   return (
-    <div>
+    <div style={{backgroundColor:"#e7f0c3"}}>
       <NavBarCan />
       <div className="containerMenu">
-        <div style={{ marginTop: "10vh" }} className="menu">
+        <div style={{ marginTop: "10vh" ,backgroundColor:"#32afa9" , fontFamily:"Lucida Sans Unicode" }} className="menu">
           {menu.map(m => (
             <div
               style={{
                 margin: "10px auto 10px auto",
                 width: "50%",
-                textAlign: "left",
+                textAlign: "left"
 
               }}
               key={m.item_id}
