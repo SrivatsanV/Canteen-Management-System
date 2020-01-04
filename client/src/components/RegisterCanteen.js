@@ -34,7 +34,7 @@ export default function RegisterUser() {
           <i class="fas fa-utensils"></i>
           {"    "}NITK NC
         </h2>
-        <form style={{ textAlign: "left" }} onSubmit={handleSubmit}>
+        <form style={{ textAlign: "left" ,fontFamily:"Verdana"}} onSubmit={handleSubmit}>
           <label className="label">Email Address</label>
           <InputGroup
             className="inputField"
