@@ -34,7 +34,7 @@ export default function CanteenList() {
         menu[key].map(m => <p>{m.item_id}</p>)
       )} */}
       <NavBarUser />
-      <div style={{ marginTop: "10vh" }}>
+      <div style={{ marginTop: "10vh" ,fontFamily:"Times New Roman"}}>
       <img src="/person.ico"/>
         {canteen.map(c => (
           <CanteenCard c={c} />
