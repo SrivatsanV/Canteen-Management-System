@@ -9,7 +9,7 @@ export default function ItemCard(props) {
   };
   return (
     <div
-      style={{ margin: "10px auto 10px auto", width: "50%", textAlign: "left" }}
+      style={{ margin: "10px auto 10px auto", width: "50%", textAlign: "left" ,backgroundColor:"#42e6a4"}}
       key={item.canteen_id}
     >
       <Card>
