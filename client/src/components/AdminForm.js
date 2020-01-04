@@ -30,11 +30,12 @@ export default function RegisterUser() {
   if (!show) {
     return (
       <div className="login">
+        <img src="/food2.PNG"   style={{ margin: "0 0 auto auto"}} />
         <h2>
           <i class="fas fa-utensils"></i>
           {"    "}NITK NC
         </h2>
-        <form style={{ textAlign: "left" }} onSubmit={handleSubmit}>
+        <form style={{ textAlign: "left"  }} onSubmit={handleSubmit}>
           <label className="label">Email Address</label>
           <InputGroup
             className="inputField"
@@ -66,6 +67,7 @@ export default function RegisterUser() {
             Login
           </Button>
         </form>
+       <img src="/food1.PNG" />
       </div>
     );
   } else {
