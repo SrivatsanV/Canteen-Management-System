@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { Button, Card, Elevation } from "@blueprintjs/core";
-import axios from "axios";
-import NavBarCan from "./NavBarCan";
+import React, { useEffect, useState } from 'react';
+import { Button, Card, Elevation } from '@blueprintjs/core';
+import axios from 'axios';
+import NavBarCan from './NavBarCan';
 
 export default function CanDashBoard() {
   const [orders, setOrders] = useState([]);
@@ -12,44 +12,44 @@ export default function CanDashBoard() {
     fetchData();
   }, [show]);
   const fetchData = () => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     var config = {
-      headers: { Authorization: "Bearer " + token }
+      headers: { Authorization: 'Bearer ' + token },
     };
     axios
       .get(`http://localhost:5000/order/canteen/orders`, config)
-      .then(res => {
+      .then((res) => {
         console.log(res.data.orders);
         setOrders(res.data.orders);
       });
   };
-  const handleClick = o => {
+  const handleClick = (o) => {
     console.log(o);
     var buffer = orders;
     var c = 0;
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     var config = {
-      headers: { Authorization: "Bearer " + token }
+      headers: { Authorization: 'Bearer ' + token },
     };
     axios
       .get(`http://localhost:5000/order/canteen/orders/accept/${o}`, config)
-      .then(res => {
+      .then((res) => {
         console.log(res.data.orders);
         setShow([...show, 1]);
       });
   };
 
-  const handleReject = o => {
+  const handleReject = (o) => {
     console.log(o);
     var buffer = orders;
     var c = 0;
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     var config = {
-      headers: { Authorization: "Bearer " + token }
+      headers: { Authorization: 'Bearer ' + token },
     };
     axios
       .get(`http://localhost:5000/order/canteen/orders/reject/${o}`, config)
-      .then(res => {
+      .then((res) => {
         console.log(res.data.orders);
         setShow([...show, 1]);
       });
@@ -58,40 +58,40 @@ export default function CanDashBoard() {
   return (
     <div>
       <NavBarCan />
-      <div style={{ marginTop: "10vh" }}>
+      <div style={{ marginTop: '10vh' }}>
         {Object.keys(orders).map((key, index) => (
           <Card
             style={{
-              margin: "20px auto auto auto",
-              width: "50%",
-              display: "grid",
-              gridTemplateColumns: "2fr 1fr",
-              alignItems: "center",
-              backgroundColor:"#f4b0c7",
-              fontFamily:"Lucida Sans Unicode",
-              color:"#015668"
+              margin: '20px auto auto auto',
+              width: '50%',
+              display: 'grid',
+              gridTemplateColumns: '2fr 1fr',
+              alignItems: 'center',
+              backgroundColor: '#f4b0c7',
+              fontFamily: 'Lucida Sans Unicode',
+              color: '#015668',
             }}
             elevation={Elevation.TWO}
           >
-            <div style={{ gridColumn: "1/2", textAlign: "left" }}>
-              <h3 style={{ color: "#2377aa" }}>Order ID : {key}</h3>
-              {orders[key][0].order_status == "Order Accepted" &&
-              orders[key][0].order_status != "Order Rejected" ? (
-                <h4 style={{ color: "#119a61" }}>
+            <div style={{ gridColumn: '1/2', textAlign: 'left' }}>
+              <h3 style={{ color: '#2377aa' }}>Order ID : {key}</h3>
+              {orders[key][0].order_status === 'Order Accepted' &&
+              orders[key][0].order_status !== 'Order Rejected' ? (
+                <h4 style={{ color: '#119a61' }}>
                   Order Status : {orders[key][0].order_status}
                 </h4>
               ) : null}
-              {orders[key][0].order_status == "Order Rejected" &&
-              orders[key][0].order_status != "Order Accepted" ? (
-                <h4 style={{ color: "#dc3c3c" }}>
+              {orders[key][0].order_status === 'Order Rejected' &&
+              orders[key][0].order_status !== 'Order Accepted' ? (
+                <h4 style={{ color: '#dc3c3c' }}>
                   Order Status : {orders[key][0].order_status}
                 </h4>
               ) : null}
-              {orders[key][0].order_status != "Order Rejected" &&
-              orders[key][0].order_status != "Order Accepted" ? (
+              {orders[key][0].order_status !== 'Order Rejected' &&
+              orders[key][0].order_status !== 'Order Accepted' ? (
                 <h4>Order Status : {orders[key][0].order_status}</h4>
               ) : null}
-              {orders[key].map(o => (
+              {orders[key].map((o) => (
                 <p>
                   {o.item_name} : {o.price}
                 </p>
@@ -101,9 +101,9 @@ export default function CanDashBoard() {
                 Customer : {orders[key][0].name} Ph :{orders[key][0].phone_num}
               </h5>
             </div>
-            <div style={{ gridColumn: "2/3" }}>
-              {orders[key][0].order_status != "Order Accepted" &&
-              orders[key][0].order_status != "Order Rejected" ? (
+            <div style={{ gridColumn: '2/3' }}>
+              {orders[key][0].order_status !== 'Order Accepted' &&
+              orders[key][0].order_status !== 'Order Rejected' ? (
                 <Button
                   onClick={() => handleClick(key)}
                   className="bp3-intent-success"
@@ -115,11 +115,11 @@ export default function CanDashBoard() {
                   {orders[key][0].order_status}
                 </Button>
               )}
-              {orders[key][0].order_status != "Order Accepted" &&
-              orders[key][0].order_status != "Order Rejected" ? (
+              {orders[key][0].order_status !== 'Order Accepted' &&
+              orders[key][0].order_status !== 'Order Rejected' ? (
                 <Button
                   onClick={() => handleReject(key)}
-                  style={{ marginLeft: "20px" }}
+                  style={{ marginLeft: '20px' }}
                   className="bp3-intent-danger"
                 >
                   Reject

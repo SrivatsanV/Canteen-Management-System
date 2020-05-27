@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { Button, InputGroup } from "@blueprintjs/core";
-import axios from "axios";
-import { Redirect } from "react-router-dom";
+import React, { useState } from 'react';
+import { Button, InputGroup } from '@blueprintjs/core';
+import axios from 'axios';
+import { Redirect } from 'react-router-dom';
 
-import "../styles/login.css";
-import validate from "./registerValidation";
-import useForm from "./useForm";
+import '../styles/login.css';
+import validate from './registerValidation';
+import useForm from './useForm';
 
 export default function RegisterUser() {
   const { values, errors, handleChange, handleSubmit } = useForm(
@@ -16,11 +16,11 @@ export default function RegisterUser() {
   const [show, setShow] = useState(false);
   function register() {
     console.log(values);
-    axios.post(`http://localhost:5000/user/register`, values).then(res => {
+    axios.post(`http://localhost:5000/user/register`, values).then((res) => {
       console.log(res);
       console.log(res.data);
-      if (res.data.msg == "email already registered") {
-        setemailErr({ msg: "Email already registered" });
+      if (res.data.msg === 'email already registered') {
+        setemailErr({ msg: 'Email already registered' });
       } else {
         setShow(true);
       }
@@ -31,9 +31,9 @@ export default function RegisterUser() {
       <div className="login" onSubmit={handleSubmit}>
         <h2>
           <i class="fas fa-utensils"></i>
-          {"    "}NITK NC
+          {'    '}NITK NC
         </h2>
-        <form style={{ textAlign: "left" }}>
+        <form style={{ textAlign: 'left' }}>
           <label className="label">Email Address</label>
           <InputGroup
             className="inputField"
