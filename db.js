@@ -6,7 +6,7 @@ var db;
 function connectDatabase() {
   if (!db) {
     db = mysql.createConnection({
-      host: '127.0.0.3',
+      host: 'localhost',
       user: 'root',
       password: `${process.env.mysqlpassword}`,
       database: 'test',
