@@ -26,7 +26,6 @@ export default function CanDashBoard() {
   }, [show]);
   const fetchData = () => {
     const token = localStorage.getItem('token');
-    console.log(token);
     var config = {
       headers: { Authorization: 'Bearer ' + token },
     };
@@ -38,7 +37,13 @@ export default function CanDashBoard() {
     });
   };
   const fetchItems = () => {
-    axios.get(`http://localhost:5000/item/`).then((res) => {
+    const token = localStorage.getItem('token');
+    console.log(token);
+    var config = {
+      headers: { Authorization: 'Bearer ' + token },
+    };
+    console.log(config);
+    axios.get(`http://localhost:5000/item/`, config).then((res) => {
       const items = res.data.item;
       console.log(items);
       //res.data.menu[3].map(m => console.log(m));
@@ -72,14 +77,12 @@ export default function CanDashBoard() {
   };
   //const handleEdit
   return (
-    <div style={{ backgroundColor: '#e7f0c3' }}>
+    <div>
       <NavBarCan />
       <div className="containerMenu">
         <div
           style={{
             marginTop: '10vh',
-            backgroundColor: '#32afa9',
-            fontFamily: 'Lucida Sans Unicode',
           }}
           className="menu"
         >
@@ -95,14 +98,13 @@ export default function CanDashBoard() {
               <Card elevation={Elevation.TWO}>
                 <h3 style={{ color: '#2377aa' }}>{m.item_name}</h3>
                 <p>
-                  <b style={{ fontFamily: 'Georgia' }}>Description :</b>{' '}
-                  {m.description}
+                  <b>Description :</b> {m.description}
                 </p>
                 <p>
-                  <b style={{ fontFamily: 'Georgia' }}>Price :</b> {m.price}
+                  <b>Price :</b> {m.price}
                 </p>
                 <p>
-                  <b style={{ fontFamily: 'Georgia' }}>Type :</b> {m.item_type}
+                  <b>Type :</b> {m.item_type}
                 </p>
                 <Button
                   icon="trash"

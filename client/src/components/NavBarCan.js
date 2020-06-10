@@ -3,6 +3,10 @@ import { Button, Navbar, Alignment } from '@blueprintjs/core';
 import { Link } from 'react-router-dom';
 
 export default function NavBarUser() {
+  const handleLogout = () => {
+    console.log('Clear storage');
+    localStorage.clear();
+  };
   return (
     <div>
       <Navbar fixedToTop={true} className="bp3-dark">
@@ -42,7 +46,12 @@ export default function NavBarUser() {
             to={`/canteen`}
             style={{ textDecoration: 'none', color: '#f5f8fa' }}
           >
-            <Button className="bp3-minimal" icon="power" text="Logout" />
+            <Button
+              className="bp3-minimal"
+              icon="power"
+              text="Logout"
+              onClick={handleLogout}
+            />
           </Link>
         </Navbar.Group>
       </Navbar>

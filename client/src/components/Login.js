@@ -1,12 +1,11 @@
-import React, { useState } from "react";
-import { Button, InputGroup } from "@blueprintjs/core";
-import axios from "axios";
-import { Link, Redirect } from "react-router-dom";
+import React, { useState } from 'react';
+import { Button, InputGroup } from '@blueprintjs/core';
+import axios from 'axios';
+import { Link, Redirect } from 'react-router-dom';
 
-import "../styles/login.css";
-import validate from "./loginValidation";
-import useForm from "./useForm";
-
+import '../styles/login.css';
+import validate from './loginValidation';
+import useForm from './useForm';
 
 export default function Login() {
   const { values, errors, handleChange, handleSubmit } = useForm(
@@ -18,27 +17,26 @@ export default function Login() {
 
   function login() {
     console.log(values);
-    axios.post(`http://localhost:5000/user/login`, values).then(res => {
+    axios.post(`http://localhost:5000/user/login`, values).then((res) => {
       console.log(res);
       console.log(res.data);
       if (res.data.msg) {
         setErr({ msg: res.data.msg });
       } else {
-        localStorage.setItem("token", res.data.token);
+        localStorage.setItem('token', res.data.token);
         setShow(true);
       }
     });
   }
   if (!show) {
     return (
-
-      <div className="login" >
-        <img src="/food2.PNG"   style={{ margin: "0 0 auto auto"}} />
+      <div className="login">
+        <img src="/food2.PNG" style={{ margin: '0 0 auto auto' }} />
         <h2>
-          <i class="fas fa-utensils"></i>
-          {"    "}NITK NC
+          <i className="fas fa-utensils"></i>
+          {'    '}NITK NC
         </h2>
-        <form style={{ textAlign: "left" }} onSubmit={handleSubmit}>
+        <form style={{ textAlign: 'left' }} onSubmit={handleSubmit}>
           {err.msg && <p className="danger">{err.msg}</p>}
           <label className="label">Email Address</label>
           <InputGroup
@@ -69,7 +67,7 @@ export default function Login() {
         <Link to="/register/user">
           <Button
             className="submitBtn bp3-intent-success"
-            style={{ marginTop: "10px" }}
+            style={{ marginTop: '10px' }}
           >
             Register
           </Button>
@@ -77,7 +75,7 @@ export default function Login() {
         <Link to="/canteen">
           <Button
             className="submitBtn bp3-intent-primary"
-            style={{ marginTop: "10px" }}
+            style={{ marginTop: '10px' }}
           >
             Night Canteen
           </Button>
@@ -85,16 +83,23 @@ export default function Login() {
         <Link to="/user/admin">
           <Button
             className="submitBtn bp3-intent-primary"
-            style={{ marginTop: "10px" }}
+            style={{ marginTop: '10px' }}
           >
             Admin
           </Button>
         </Link>
-        <div class="im" style={{ margin: "auto auto 0 0"}}>
-        <img src="/food1.PNG" />
+        <Link to="/canteenlist">
+          <Button
+            className="submitBtn bp3-intent-primary"
+            style={{ marginTop: '10px' }}
+          >
+            List of Canteens
+          </Button>
+        </Link>
+        <div className="im" style={{ margin: 'auto auto 0 0' }}>
+          <img src="/food1.PNG" />
         </div>
       </div>
-
     );
   } else {
     return <Redirect to="/canteenlist" />;
