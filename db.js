@@ -1,20 +1,20 @@
-const mysql = require("mysql");
-require("dotenv/config");
+const mysql = require('mysql');
+require('dotenv/config');
 
 var db;
 
 function connectDatabase() {
   if (!db) {
     db = mysql.createConnection({
-      host: "localhost",
-      user: "root",
+      host: '127.0.0.3',
+      user: 'root',
       password: `${process.env.mysqlpassword}`,
-      database: "test"
+      database: 'test',
     });
 
-    db.connect(function(err) {
+    db.connect(function (err) {
       if (!err) {
-        console.log("Database is connected!");
+        console.log('Database is connected!');
       } else {
         console.log(err);
       }
