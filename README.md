@@ -7,8 +7,10 @@ The Project is aimed at solving various issues involved during the ordering of f
 https://nodejs.org/en/ for windows  
 ```sudo apt-get nodejs``` for Ubuntu
 
-1. Install MySql workbench 
-https://dev.mysql.com/downloads/workbench/
+1. Install MySql workbench and MySql Server (while installing please create a password for root and always use root)
+https://downloads.mysql.com/archives/installer/ (8.0 version)
+
+1. Create a connection with user : root and use password for root and remember the connection address
 
 1. Clone the repo
 
@@ -21,7 +23,7 @@ https://dev.mysql.com/downloads/workbench/
    1. ```secret = <any random string>```
    1. ```jwt_secret = <any random string>```
  
-1. Setting up the database:  Using the root user on your workbench execute the ```TestScript.sql``` on the workbench to create the schema and the tables.
+1. Setting up the database:  Using the root user on your workbench execute the ```FinalSqlScript.sql``` on the workbench to create the schema and the tables.
 
 1. Run the script ```npm run dev``` to run the node js server and react app concurrently. (see package,json for ither scripts).
 
