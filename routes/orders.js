@@ -1,26 +1,26 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const jwt = require("jsonwebtoken");
+const jwt = require('jsonwebtoken');
 
-const db = require("../db");
-const vt = require("../token");
+const db = require('../db');
+const vt = require('../token');
 
-const groupBy = key => array =>
+const groupBy = (key) => (array) =>
   array.reduce((objectsByKeyValue, obj) => {
     const value = obj[key];
     objectsByKeyValue[value] = (objectsByKeyValue[value] || []).concat(obj);
     return objectsByKeyValue;
   }, {});
-const grouped_can = groupBy("order_id");
+const grouped_can = groupBy('order_id');
 
-router.get("/:id", (req, res) => {
+router.get('/:id', (req, res) => {
   const id = req.params.id;
   db.query(`SELECT * from ordered_items where order_id=${id}`, (err, data) => {
     err ? res.send(err) : res.json({ order: data });
   });
 });
 
-router.get("/canteen/orders", vt, (req, res) => {
+router.get('/canteen/orders', vt, (req, res) => {
   jwt.verify(req.token, process.env.jwt_secret, (err, authData) => {
     if (authData == undefined) res.sendStatus(403);
     else if (authData.data[0].uid) res.sendStatus(403);
@@ -38,7 +38,7 @@ router.get("/canteen/orders", vt, (req, res) => {
   });
 });
 
-router.get("/canteen/orders/accept/:id", vt, (req, res) => {
+router.get('/canteen/orders/accept/:id', vt, (req, res) => {
   jwt.verify(req.token, process.env.jwt_secret, (err, authData) => {
     if (authData == undefined) res.sendStatus(403);
     else if (authData.data[0].uid) res.sendStatus(403);
@@ -56,7 +56,7 @@ router.get("/canteen/orders/accept/:id", vt, (req, res) => {
   });
 });
 
-router.get("/canteen/orders/reject/:id", vt, (req, res) => {
+router.get('/canteen/orders/reject/:id', vt, (req, res) => {
   jwt.verify(req.token, process.env.jwt_secret, (err, authData) => {
     if (authData == undefined) res.sendStatus(403);
     else if (authData.data[0].uid) res.sendStatus(403);
@@ -74,7 +74,7 @@ router.get("/canteen/orders/reject/:id", vt, (req, res) => {
   });
 });
 
-router.get("/user/orders", vt, (req, res) => {
+router.get('/user/orders', vt, (req, res) => {
   jwt.verify(req.token, process.env.jwt_secret, (err, authData) => {
     if (authData == undefined) res.sendStatus(403);
     else if (authData.data[0].canteen_id) res.sendStatus(403);
@@ -92,7 +92,7 @@ router.get("/user/orders", vt, (req, res) => {
   });
 });
 
-router.post("/", vt, (req, res) => {
+router.post('/', vt, (req, res) => {
   jwt.verify(req.token, process.env.jwt_secret, (err, authData) => {
     const uid = authData.data[0].uid;
     const can_id = req.body.canteen_id;
@@ -106,7 +106,7 @@ router.post("/", vt, (req, res) => {
       var c = 0;
       var total_price = 0;
       var prices = [];
-      items.map(it => {
+      items.map((it) => {
         db.query(
           `SELECT price from menu where canteen_id = ? and item_id=?`,
           [can_id, it],
@@ -127,7 +127,7 @@ router.post("/", vt, (req, res) => {
                     : res.status(200).json({ insertId: results.insertId });
                   order_id = results.insertId;
                   var k = 0;
-                  items.map(item => {
+                  items.map((item) => {
                     db.query(
                       `INSERT INTO ordered_items values (${item},${order_id},${prices[k]})`,
                       (err, results, data) => {

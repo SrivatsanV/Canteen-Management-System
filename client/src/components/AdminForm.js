@@ -1,11 +1,10 @@
-import React, { useState } from "react";
-import { Button, InputGroup, RadioGroup, Radio } from "@blueprintjs/core";
-import axios from "axios";
-import { Redirect } from "react-router-dom";
-
-import "../styles/login.css";
-import validate from "./loginValidation";
-import useForm from "./useForm";
+import React, { useState } from 'react';
+import { Button, InputGroup, RadioGroup, Radio } from '@blueprintjs/core';
+import axios from 'axios';
+import { Link, Redirect } from 'react-router-dom';
+import '../styles/login.css';
+import validate from './loginValidation';
+import useForm from './useForm';
 
 export default function RegisterUser() {
   const { values, errors, handleChange, handleSubmit } = useForm(
@@ -16,13 +15,11 @@ export default function RegisterUser() {
   const [show, setShow] = useState(false);
   function register() {
     console.log(values);
-    axios.post(`http://localhost:5000/user/admin/login`, values).then(res => {
-      console.log(res);
-      console.log(res.data);
-
-      if (res.data.msg != "Logged in") {
+    axios.post(`http://localhost:5000/user/admin/login`, values).then((res) => {
+      if (res.data.msg === 'email doesnt exist') {
         setemailErr({ msg: res.data.msg });
       } else {
+        localStorage.setItem('token', res.data.token);
         setShow(true);
       }
     });
@@ -30,12 +27,12 @@ export default function RegisterUser() {
   if (!show) {
     return (
       <div className="login">
-        <img src="/food2.PNG"   style={{ margin: "0 0 auto auto"}} />
+        <img src="/food2.PNG" style={{ margin: '0 0 auto auto' }} />
         <h2>
           <i class="fas fa-utensils"></i>
-          {"    "}NITK NC
+          {'    '}NITK NC
         </h2>
-        <form style={{ textAlign: "left"  }} onSubmit={handleSubmit}>
+        <form style={{ textAlign: 'left' }} onSubmit={handleSubmit}>
           <label className="label">Email Address</label>
           <InputGroup
             className="inputField"
@@ -67,7 +64,15 @@ export default function RegisterUser() {
             Login
           </Button>
         </form>
-       <img src="/food1.PNG" />
+        <Link to="/user">
+          <Button
+            className="submitBtn bp3-intent-primary"
+            style={{ marginTop: '10px' }}
+          >
+            Home
+          </Button>
+        </Link>
+        <img src="/food1.PNG" />
       </div>
     );
   } else {
